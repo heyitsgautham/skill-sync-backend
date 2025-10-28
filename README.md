@@ -1,83 +1,43 @@
-# SkillSync Backend# SkillSync Backend
+# SkillSync Backend
 
+An intelligent internship matching platform that connects students with companies using AI-powered recommendations. The system uses RAG (Retrieval-Augmented Generation) with LLM to analyze student resumes and internship postings for optimal matching.
 
+## Tech Stack
 
-An intelligent internship matching platform that connects students with companies using AI-powered recommendations.An intelligent internship matching platform that connects students with companies using AI-powered recommendations. The system uses RAG (Retrieval-Augmented Generation) with LLM to analyze student resumes and internship postings for optimal matching.
-
-
-
-## Overview## Tech Stack
-
-
-
-SkillSync bridges the gap between students seeking internships and companies looking for qualified interns by using Retrieval-Augmented Generation (RAG) with LLM to analyze student resumes and internship postings for optimal matching.- **Framework**: FastAPI
-
+- **Framework**: FastAPI
 - **Database**: PostgreSQL with SQLAlchemy ORM
-
-## Features- **Authentication**: JWT-based auth with bcrypt password hashing
-
+- **Authentication**: JWT-based auth with bcrypt password hashing
 - **Python Version**: 3.9+
 
-- **For Students**: Register, build profiles, upload resumes, apply for internships, and receive AI-based recommendations
+## Project Structure
 
-- **For Companies**: Post internships, view matched candidates, and manage applications## Project Structure
-
-- **For Admins**: Manage users, oversee listings, and access analytics dashboard
-
-- **AI Matching**: RAG-powered intelligent matching between students and internships```
-
+```
 skillsync-backend/
-
-## Tech Stack├── app/
-
+├── app/
 │   ├── main.py              # Application entry point
-
-- **Framework**: FastAPI│   ├── models/              # Database models
-
-- **Database**: PostgreSQL with SQLAlchemy ORM│   │   └── user.py
-
-- **Authentication**: JWT-based authentication│   ├── routes/              # API endpoints
-
-- **AI/ML**: RAG system with LLM integration│   │   ├── auth.py
-
+│   ├── models/              # Database models
+│   │   └── user.py
+│   ├── routes/              # API endpoints
+│   │   ├── auth.py
 │   │   └── health.py
-
-## Project Status│   ├── services/            # Business logic
-
+│   ├── services/            # Business logic
 │   │   └── auth_service.py
-
-🚧 **Under Development** - The initial backend infrastructure is being set up.│   ├── database/            # Database configuration
-
+│   ├── database/            # Database configuration
 │   │   └── connection.py
-
-## Getting Started│   └── utils/               # Utility functions
-
+│   └── utils/               # Utility functions
 │       └── security.py
-
-Setup instructions will be available once the initial implementation is complete.├── requirements.txt         # Python dependencies
-
+├── requirements.txt         # Python dependencies
 ├── .env                     # Environment variables (DO NOT COMMIT)
-
-## Contributing├── .gitignore
-
+├── .gitignore
 └── README.md
+```
 
-This project follows a PR-based workflow:```
-
-1. All changes must be made through pull requests
-
-2. Create feature branches from `main`## Getting Started
-
-3. Submit PR for review before merging
+## Getting Started
 
 ### Prerequisites
 
-## License
-
 - Python 3.9 or higher
-
-[Your License Here]- PostgreSQL 12+ (tested with PostgreSQL 14)
-
+- PostgreSQL 12+ (tested with PostgreSQL 14)
 - pip (Python package manager)
 - Git
 
