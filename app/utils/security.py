@@ -6,10 +6,17 @@ from datetime import datetime, timedelta
 from typing import Optional
 from passlib.context import CryptContext
 from jose import JWTError, jwt
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.orm import Session
 import os
 from dotenv import load_dotenv
+from app.database.connection import get_db
 
 load_dotenv()
+
+# OAuth2 scheme for token extraction
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
 
 # Security configuration
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
@@ -65,3 +72,54 @@ def decode_access_token(token: str) -> Optional[dict]:
         return payload
     except JWTError:
         return None
+
+
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+):
+    """
+    Get current authenticated user from JWT token
+    
+    Args:
+        token: JWT token from Authorization header
+        db: Database session
+    
+    Returns:
+        Current user object
+    
+    Raises:
+        HTTPException: If token is invalid or user not found
+    """
+    from app.models import User
+    
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    
+    try:
+        payload = decode_access_token(token)
+        if payload is None:
+            raise credentials_exception
+        
+        user_email: str = payload.get("sub")
+        if user_email is None:
+            raise credentials_exception
+            
+    except JWTError:
+        raise credentials_exception
+    
+    user = db.query(User).filter(User.email == user_email).first()
+    
+    if user is None:
+        raise credentials_exception
+    
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Inactive user"
+        )
+    
+    return user

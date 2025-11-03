@@ -1,7 +1,3 @@
----
-applyTo: '**'
----
-
 Goal: Lay the groundwork for the backend structure, environment, and core services.
 
 Tasks:

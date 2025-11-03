@@ -1,5 +1,8 @@
 """Database models package"""
 
-from app.models.user import User
+from app.models.user import User, UserRole
+from app.models.internship import Internship
+from app.models.resume import Resume
+from app.models.application import Application, ApplicationStatus
 
-__all__ = ["User"]
+__all__ = ["User", "UserRole", "Internship", "Resume", "Application", "ApplicationStatus"]
