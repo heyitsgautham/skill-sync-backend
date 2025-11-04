@@ -188,12 +188,31 @@ class RAGEngine:
                 include=["metadatas", "distances"]
             )
             
-            # Format results with match scores
+            # Format results with match scores using min-max normalization
             matches = []
             if results['metadatas'] and len(results['metadatas']) > 0 and len(results['metadatas'][0]) > 0:
-                for metadata, distance in zip(results['metadatas'][0], results['distances'][0]):
-                    # Convert distance to similarity score (0-100)
-                    similarity = max(0, min(100, int((1 - distance) * 100)))
+                distances = results['distances'][0]
+                
+                # Get distance range for normalization
+                if len(distances) > 1:
+                    min_dist = min(distances)
+                    max_dist = max(distances)
+                    dist_range = max_dist - min_dist
+                else:
+                    min_dist = distances[0] if distances else 0
+                    dist_range = 0
+                
+                for metadata, distance in zip(results['metadatas'][0], distances):
+                    # Min-max normalization with inversion (lower distance = higher score)
+                    if dist_range > 0:
+                        normalized = 1 - ((distance - min_dist) / dist_range)
+                        # Scale to 35-95 range for good visual differentiation
+                        similarity = int(35 + (normalized * 60))
+                    else:
+                        # All distances the same, give high score
+                        similarity = 85
+                    
+                    similarity = max(0, min(100, similarity))
                     
                     # Convert skills string back to list
                     skills_str = metadata.get('required_skills', '')
@@ -249,12 +268,31 @@ class RAGEngine:
                 include=["metadatas", "distances"]
             )
             
-            # Format results with match scores
+            # Format results with match scores using min-max normalization
             matches = []
             if results['metadatas'] and len(results['metadatas']) > 0 and len(results['metadatas'][0]) > 0:
-                for metadata, distance in zip(results['metadatas'][0], results['distances'][0]):
-                    # Convert distance to similarity score (0-100)
-                    similarity = max(0, min(100, int((1 - distance) * 100)))
+                distances = results['distances'][0]
+                
+                # Get distance range for normalization
+                if len(distances) > 1:
+                    min_dist = min(distances)
+                    max_dist = max(distances)
+                    dist_range = max_dist - min_dist
+                else:
+                    min_dist = distances[0] if distances else 0
+                    dist_range = 0
+                
+                for metadata, distance in zip(results['metadatas'][0], distances):
+                    # Min-max normalization with inversion (lower distance = higher score)
+                    if dist_range > 0:
+                        normalized = 1 - ((distance - min_dist) / dist_range)
+                        # Scale to 35-95 range for good visual differentiation
+                        similarity = int(35 + (normalized * 60))
+                    else:
+                        # All distances the same, give high score
+                        similarity = 85
+                    
+                    similarity = max(0, min(100, similarity))
                     
                     # Convert skills string back to list
                     skills_str = metadata.get('skills', '')

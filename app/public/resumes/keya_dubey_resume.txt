@@ -1,0 +1,35 @@
+
+KEYA DUBEY
+Email: keya.dubey@student.com | Phone: +91-9000000049
+LinkedIn: linkedin.com/in/keyadubey | GitHub: github.com/keyadubey
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.4/10
+
+TECHNICAL SKILLS
+UI/UX, Figma, React, Animation, Framer Motion, Design Systems, HTML, CSS
+
+EXPERIENCE
+Designed and implemented interactive user interfaces
+
+PROJECTS
+Project 1: Built innovative solutions using UI/UX and Figma
+• Implemented core features with React
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Animation and Framer Motion
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in UI/UX
+• Completed online courses in Figma and React

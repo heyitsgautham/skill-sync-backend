@@ -1,5 +1,5 @@
 """
-Resume Parser Service - Extract text and metadata from PDF/DOCX files
+Resume Parser Service - Extract text and metadata from PDF/DOCX/TXT files
 """
 
 import os
@@ -52,6 +52,24 @@ class ResumeParser:
             raise Exception(f"Error extracting text from DOCX: {str(e)}")
     
     @staticmethod
+    def extract_text_from_txt(file_path: str) -> str:
+        """
+        Extract text from TXT file
+        
+        Args:
+            file_path: Path to the TXT file
+            
+        Returns:
+            Extracted text content
+        """
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                text = file.read()
+            return text.strip()
+        except Exception as e:
+            raise Exception(f"Error extracting text from TXT: {str(e)}")
+    
+    @staticmethod
     def parse_resume(file_path: str) -> Dict[str, any]:
         """
         Parse resume file and extract text content
@@ -68,6 +86,8 @@ class ResumeParser:
             text = ResumeParser.extract_text_from_pdf(file_path)
         elif file_extension in ['.docx', '.doc']:
             text = ResumeParser.extract_text_from_docx(file_path)
+        elif file_extension == '.txt':
+            text = ResumeParser.extract_text_from_txt(file_path)
         else:
             raise ValueError(f"Unsupported file format: {file_extension}")
         

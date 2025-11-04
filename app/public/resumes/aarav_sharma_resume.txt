@@ -1,0 +1,35 @@
+
+AARAV SHARMA
+Email: aarav.sharma@student.com | Phone: +91-9000000000
+LinkedIn: linkedin.com/in/aaravsharma | GitHub: github.com/aaravsharma
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.0/10
+
+TECHNICAL SKILLS
+Python, JavaScript, React, Node.js, MongoDB, Express.js, REST API, Git
+
+EXPERIENCE
+Built 3 full-stack projects including e-commerce platform and social media app
+
+PROJECTS
+Project 1: Built innovative solutions using Python and JavaScript
+• Implemented core features with React
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Node.js and MongoDB
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Python
+• Completed online courses in JavaScript and React

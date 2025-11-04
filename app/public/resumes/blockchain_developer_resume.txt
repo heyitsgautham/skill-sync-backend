@@ -1,0 +1,69 @@
+
+RAHUL VERMA
+Blockchain Developer
+Email: rahul.verma@email.com | Phone: +91-9876543212 | LinkedIn: linkedin.com/in/rahulverma
+GitHub: github.com/rahulverma | Location: Mumbai, India
+
+EDUCATION
+Bachelor of Technology in Information Technology
+National Institute of Technology, Trichy | 2022 - 2026 | CGPA: 9.0/10
+Relevant Coursework: Cryptography, Distributed Systems, Security, Database Systems
+
+TECHNICAL SKILLS
+• Blockchain: Ethereum, Hyperledger Fabric, Solana, Polygon, BSC
+• Smart Contracts: Solidity, Rust, Vyper
+• Web3: Web3.js, Ethers.js, Hardhat, Truffle, Ganache
+• Cryptocurrencies: Bitcoin, Ethereum, DeFi Protocols
+• Backend: Node.js, Python, FastAPI, Express.js
+• Databases: MongoDB, PostgreSQL, IPFS
+• Security: Smart Contract Auditing, Penetration Testing
+• Tools: Remix IDE, MetaMask, OpenZeppelin, Chainlink
+
+PROJECTS
+Decentralized Exchange (DEX) | Solidity, React, Hardhat
+• Built a decentralized exchange for token swaps using automated market maker (AMM) model
+• Implemented liquidity pools, staking mechanisms, and yield farming
+• Developed smart contracts with security best practices and conducted security audits
+• Created frontend with Web3.js for wallet integration and transaction handling
+• Deployed on Ethereum testnet and Polygon mainnet
+
+NFT Marketplace | Solidity, IPFS, React, Ethers.js
+• Developed a full-featured NFT marketplace with minting, buying, and selling functionality
+• Stored metadata on IPFS for decentralization and immutability
+• Implemented royalty payments and auction mechanisms
+• Created admin dashboard for marketplace analytics
+• Gas-optimized smart contracts reducing transaction costs by 30%
+
+DeFi Lending Protocol | Solidity, OpenZeppelin, Chainlink
+• Built a peer-to-peer lending platform with collateralization and liquidation mechanisms
+• Integrated Chainlink oracles for real-time price feeds
+• Implemented interest rate models and credit scoring system
+• Used OpenZeppelin contracts for security and standard compliance
+• Achieved 95% test coverage with unit and integration tests
+
+DAO Governance Platform | Solidity, React, The Graph
+• Created a decentralized autonomous organization (DAO) with voting mechanisms
+• Implemented proposal creation, voting, and execution of on-chain actions
+• Used The Graph for indexing and querying blockchain data efficiently
+• Built intuitive UI for DAO members to participate in governance
+• Deployed on multiple chains for cross-chain governance
+
+EXPERIENCE
+Blockchain Development Intern | CryptoStartup | May 2024 - Aug 2024
+• Developed and tested smart contracts for a DeFi protocol
+• Audited existing smart contracts and fixed security vulnerabilities
+• Integrated blockchain functionality into web applications using Web3.js
+• Participated in code reviews and contributed to technical documentation
+• Optimized gas costs for contract deployments and transactions
+
+ACHIEVEMENTS
+• Won 2nd place in ETHIndia Hackathon 2024 for DeFi innovation
+• Contributed to 5+ open-source blockchain projects
+• Completed security audit certification from OpenZeppelin
+• Published research paper on "Scalability Solutions in Blockchain"
+• Active participant in blockchain developer community with 50+ forum contributions
+
+CERTIFICATIONS
+• Certified Blockchain Developer - Ethereum
+• Smart Contract Security Auditor
+• Certified Solidity Developer

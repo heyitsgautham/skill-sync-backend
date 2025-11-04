@@ -1,0 +1,35 @@
+
+NAVYA PILLAI
+Email: navya.pillai@student.com | Phone: +91-9000000015
+LinkedIn: linkedin.com/in/navyapillai | GitHub: github.com/navyapillai
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.8/10
+
+TECHNICAL SKILLS
+Python, Machine Learning, Scikit-learn, TensorFlow, Feature Engineering, Model Deployment, Flask, Git
+
+EXPERIENCE
+Deployed ML models in production using Flask and Docker
+
+PROJECTS
+Project 1: Built innovative solutions using Python and Machine Learning
+• Implemented core features with Scikit-learn
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using TensorFlow and Feature Engineering
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Python
+• Completed online courses in Machine Learning and Scikit-learn

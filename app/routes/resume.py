@@ -38,7 +38,7 @@ async def upload_resume(
     """
     Upload and parse resume for student
     
-    - **file**: Resume file (PDF or DOCX)
+    - **file**: Resume file (PDF, DOCX, or TXT)
     - Extracts text, skills, and generates embeddings
     - Stores in database and vector DB
     """
@@ -50,7 +50,7 @@ async def upload_resume(
         )
     
     # Validate file type
-    allowed_extensions = ['.pdf', '.docx', '.doc']
+    allowed_extensions = ['.pdf', '.docx', '.doc', '.txt']
     file_extension = os.path.splitext(file.filename)[1].lower()
     
     if file_extension not in allowed_extensions:
@@ -142,6 +142,40 @@ def get_my_resumes(
     ).order_by(Resume.created_at.desc()).all()
     
     return resumes
+
+
+@router.put("/{resume_id}/activate", response_model=ResumeResponse)
+def activate_resume(
+    resume_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Set a resume as active (deactivates all other resumes)
+    """
+    resume = db.query(Resume).filter(
+        Resume.id == resume_id,
+        Resume.student_id == current_user.id
+    ).first()
+    
+    if not resume:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Resume not found"
+        )
+    
+    # Deactivate all other resumes for this student
+    db.query(Resume).filter(
+        Resume.student_id == current_user.id,
+        Resume.is_active == 1
+    ).update({"is_active": 0})
+    
+    # Activate this resume
+    resume.is_active = 1
+    db.commit()
+    db.refresh(resume)
+    
+    return resume
 
 
 @router.delete("/{resume_id}", status_code=status.HTTP_204_NO_CONTENT)

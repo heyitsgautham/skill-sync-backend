@@ -1,0 +1,35 @@
+
+KAVYA HEGDE
+Email: kavya.hegde@student.com | Phone: +91-9000000037
+LinkedIn: linkedin.com/in/kavyahegde | GitHub: github.com/kavyahegde
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.8/10
+
+TECHNICAL SKILLS
+Solidity, Ethereum, Truffle, Web3.js, Smart Contract Security, DApps, JavaScript, Git
+
+EXPERIENCE
+Audited smart contracts and developed secure DApps
+
+PROJECTS
+Project 1: Built innovative solutions using Solidity and Ethereum
+• Implemented core features with Truffle
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Web3.js and Smart Contract Security
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Solidity
+• Completed online courses in Ethereum and Truffle

@@ -1,0 +1,35 @@
+
+RIYA GHOSH
+Email: riya.ghosh@student.com | Phone: +91-9000000027
+LinkedIn: linkedin.com/in/riyaghosh | GitHub: github.com/riyaghosh
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.3/10
+
+TECHNICAL SKILLS
+iOS, Swift, UIKit, SwiftUI, Core Data, Alamofire, MVC, Git
+
+EXPERIENCE
+Developed feature-rich iOS applications
+
+PROJECTS
+Project 1: Built innovative solutions using iOS and Swift
+• Implemented core features with UIKit
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using SwiftUI and Core Data
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in iOS
+• Completed online courses in Swift and UIKit

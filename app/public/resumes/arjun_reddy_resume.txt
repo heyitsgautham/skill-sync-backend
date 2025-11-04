@@ -1,0 +1,35 @@
+
+ARJUN REDDY
+Email: arjun.reddy@student.com | Phone: +91-9000000002
+LinkedIn: linkedin.com/in/arjunreddy | GitHub: github.com/arjunreddy
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.1/10
+
+TECHNICAL SKILLS
+TypeScript, Next.js, Node.js, GraphQL, MongoDB, Redis, Jest, Git
+
+EXPERIENCE
+Created real-time collaboration tools and GraphQL APIs
+
+PROJECTS
+Project 1: Built innovative solutions using TypeScript and Next.js
+• Implemented core features with Node.js
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using GraphQL and MongoDB
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in TypeScript
+• Completed online courses in Next.js and Node.js

@@ -1,0 +1,35 @@
+
+IRA BHATT
+Email: ira.bhatt@student.com | Phone: +91-9000000019
+LinkedIn: linkedin.com/in/irabhatt | GitHub: github.com/irabhatt
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.9/10
+
+TECHNICAL SKILLS
+Python, Deep Learning, Reinforcement Learning, TensorFlow, PyTorch, OpenAI Gym, Neural Networks, Git
+
+EXPERIENCE
+Developed reinforcement learning agents for game playing
+
+PROJECTS
+Project 1: Built innovative solutions using Python and Deep Learning
+• Implemented core features with Reinforcement Learning
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using TensorFlow and PyTorch
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Python
+• Completed online courses in Deep Learning and Reinforcement Learning

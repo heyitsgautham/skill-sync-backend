@@ -1,0 +1,35 @@
+
+ROHAN KULKARNI
+Email: rohan.kulkarni@student.com | Phone: +91-9000000036
+LinkedIn: linkedin.com/in/rohankulkarni | GitHub: github.com/rohankulkarni
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.8/10
+
+TECHNICAL SKILLS
+Rust, Solana, Smart Contracts, Web3, Blockchain, TypeScript, React, Git
+
+EXPERIENCE
+Built applications on Solana blockchain
+
+PROJECTS
+Project 1: Built innovative solutions using Rust and Solana
+• Implemented core features with Smart Contracts
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Web3 and Blockchain
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Rust
+• Completed online courses in Solana and Smart Contracts
