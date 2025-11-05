@@ -1,0 +1,35 @@
+
+NORA DAS
+Email: nora.das@student.com | Phone: +91-9000000035
+LinkedIn: linkedin.com/in/noradas | GitHub: github.com/noradas
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.8/10
+
+TECHNICAL SKILLS
+Blockchain, Solidity, Ethers.js, NFTs, IPFS, React, Web3, Git
+
+EXPERIENCE
+Created NFT marketplaces and Web3 applications
+
+PROJECTS
+Project 1: Built innovative solutions using Blockchain and Solidity
+• Implemented core features with Ethers.js
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using NFTs and IPFS
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Blockchain
+• Completed online courses in Solidity and Ethers.js

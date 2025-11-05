@@ -1,0 +1,35 @@
+
+VEDANT TRIVEDI
+Email: vedant.trivedi@student.com | Phone: +91-9000000040
+LinkedIn: linkedin.com/in/vedanttrivedi | GitHub: github.com/vedanttrivedi
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.0/10
+
+TECHNICAL SKILLS
+Security, Cryptography, Python, C++, Network Security, Firewalls, IDS/IPS, Git
+
+EXPERIENCE
+Implemented security solutions and encryption systems
+
+PROJECTS
+Project 1: Built innovative solutions using Security and Cryptography
+• Implemented core features with Python
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using C++ and Network Security
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Security
+• Completed online courses in Cryptography and Python

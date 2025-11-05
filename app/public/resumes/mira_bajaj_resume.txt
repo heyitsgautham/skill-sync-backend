@@ -1,0 +1,35 @@
+
+MIRA BAJAJ
+Email: mira.bajaj@student.com | Phone: +91-9000000031
+LinkedIn: linkedin.com/in/mirabajaj | GitHub: github.com/mirabajaj
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.6/10
+
+TECHNICAL SKILLS
+AWS, Docker, Jenkins, Python, Bash, CI/CD, Monitoring, Git
+
+EXPERIENCE
+Built automated deployment pipelines and monitoring systems
+
+PROJECTS
+Project 1: Built innovative solutions using AWS and Docker
+• Implemented core features with Jenkins
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Python and Bash
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in AWS
+• Completed online courses in Docker and Jenkins

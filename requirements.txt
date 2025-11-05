@@ -1,27 +1,43 @@
 # FastAPI and server
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-python-multipart==0.0.6
+fastapi
+uvicorn[standard]
+python-multipart
 
-# Database
-sqlalchemy==2.0.23
-psycopg2-binary==2.9.9
-alembic==1.12.1
+# Database  
+sqlalchemy==1.4.53
+psycopg2-binary
+alembic
 
 # Authentication & Security
-python-jose[cryptography]==3.3.0
+python-jose[cryptography]
 passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
-python-dotenv==1.0.0
+python-dotenv
 
 # Validation
-pydantic==2.5.0
-pydantic[email]==2.5.0
+pydantic
+pydantic[email]
 
 # CORS
-fastapi-cors==0.0.6
+fastapi-cors
 
 # Testing
-pytest==7.4.3
-pytest-asyncio==0.21.1
-httpx==0.25.2
+pytest
+pytest-asyncio
+httpx
+
+# Document Processing
+PyMuPDF
+python-docx
+pdfplumber
+
+# AI/ML and Vector DB
+google-generativeai
+langchain
+langchain-google-genai
+langchain-huggingface
+chromadb
+sentence-transformers
+transformers
+torch
+numpy

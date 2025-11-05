@@ -1,0 +1,59 @@
+
+PRIYA SHARMA
+Game Developer
+Email: priya.sharma@email.com | Phone: +91-9876543211 | LinkedIn: linkedin.com/in/priyasharma
+Portfolio: priyasharma.dev | Location: Hyderabad, India
+
+EDUCATION
+Bachelor of Technology in Computer Science
+BITS Pilani | 2022 - 2026 | CGPA: 8.5/10
+Relevant Coursework: Computer Graphics, Game Development, AI for Games, 3D Modeling
+
+TECHNICAL SKILLS
+• Game Engines: Unity, Unreal Engine 5, Godot
+• Programming: C#, C++, Python, GDScript
+• Graphics: HLSL, GLSL, Shader Programming, OpenGL, DirectX
+• 3D Tools: Blender, Maya, Substance Painter
+• Game Design: Level Design, Game Mechanics, AI Behavior Trees
+• Version Control: Git, Perforce, Plastic SCM
+• Other: Physics Engines, Multiplayer Networking, UI/UX Design
+
+PROJECTS
+3D RPG Adventure Game | Unity, C#, Blender
+• Developed a 3D role-playing game with combat system, inventory management, and quest system
+• Implemented AI enemies with behavior trees and pathfinding using A* algorithm
+• Created custom shaders for visual effects and optimized rendering pipeline
+• Designed and built 15+ game levels with environmental storytelling
+• Integrated save/load system with encrypted player data
+
+Multiplayer FPS Game | Unreal Engine 5, C++, Photon
+• Built a first-person shooter with real-time multiplayer support for up to 16 players
+• Implemented weapon systems, character abilities, and matchmaking
+• Optimized network code to reduce latency and improve synchronization
+• Created responsive UI/UX with dynamic HUD elements
+• Used Lumen for dynamic global illumination and ray tracing
+
+Mobile Puzzle Game | Unity, C#, iOS/Android
+• Published a puzzle game on Google Play Store with 50K+ downloads
+• Implemented 100+ levels with increasing difficulty and unique mechanics
+• Integrated Google Play Services for achievements and leaderboards
+• Monetized through ads and in-app purchases
+• Maintained 4.5-star rating with regular content updates
+
+EXPERIENCE
+Game Development Intern | Indie Game Studio | Jun 2024 - Sep 2024
+• Worked on a team developing a 2D platformer game using Unity
+• Programmed game mechanics, animations, and player controls
+• Collaborated with artists to integrate assets and animations
+• Conducted playtesting sessions and implemented feedback
+• Optimized game performance for mobile devices
+
+ACHIEVEMENTS
+• Won Best Game Award at National Game Jam 2024 (72-hour competition)
+• Published 3 games on itch.io with 10K+ combined plays
+• Created YouTube tutorials on Unity development with 5K subscribers
+• Contributed to open-source Unity asset packages
+
+CERTIFICATIONS
+• Unity Certified Programmer
+• Unreal Engine 5 C++ Developer

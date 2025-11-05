@@ -1,0 +1,53 @@
+
+ALEX KUMAR
+Software Engineer
+Email: alex.kumar@email.com | Phone: +91-9876543210 | LinkedIn: linkedin.com/in/alexkumar
+GitHub: github.com/alexkumar | Location: Bangalore, India
+
+EDUCATION
+Bachelor of Technology in Computer Science Engineering
+Indian Institute of Technology, Delhi | 2022 - 2026 | CGPA: 8.7/10
+
+TECHNICAL SKILLS
+• Languages: Python, JavaScript, TypeScript, Java, C++
+• Frontend: React.js, Next.js, HTML5, CSS3, Tailwind CSS, Redux
+• Backend: Node.js, Express.js, FastAPI, Django, REST API, GraphQL
+• Databases: PostgreSQL, MongoDB, MySQL, Redis
+• Tools & Technologies: Git, Docker, AWS, CI/CD, Jest, Postman
+• Concepts: Data Structures, Algorithms, OOP, System Design, Agile
+
+PROJECTS
+E-Commerce Platform | React, Node.js, PostgreSQL, Stripe
+• Built a full-stack e-commerce application with user authentication, product management, and payment integration
+• Implemented shopping cart functionality with Redux for state management
+• Deployed on AWS with automated CI/CD pipeline using GitHub Actions
+• Achieved 95% test coverage using Jest and Supertest
+
+Task Management System | TypeScript, Express, MongoDB
+• Developed a collaborative task management application with real-time updates using Socket.io
+• Implemented JWT-based authentication and role-based access control
+• Created RESTful APIs with comprehensive documentation using Swagger
+• Optimized database queries resulting in 40% faster response times
+
+Social Media Analytics Dashboard | Python, FastAPI, React
+• Built analytics dashboard for social media metrics using Chart.js and D3.js
+• Integrated with Twitter and Instagram APIs for data collection
+• Implemented data processing pipeline with Pandas and NumPy
+• Used Redis for caching to improve performance by 60%
+
+EXPERIENCE
+Software Development Intern | StartupXYZ | Jun 2024 - Aug 2024
+• Developed and maintained features for a SaaS product using React and Node.js
+• Collaborated with cross-functional teams using Agile methodology
+• Fixed critical bugs and improved code quality through code reviews
+• Wrote unit tests and integration tests to ensure code reliability
+
+ACHIEVEMENTS
+• Won 1st place in college hackathon for developing an AI-powered study assistant
+• Contributed to 3 open-source projects with 500+ combined stars on GitHub
+• Solved 400+ problems on LeetCode (Rating: 1850)
+• Published technical articles on Medium with 10K+ views
+
+CERTIFICATIONS
+• AWS Certified Cloud Practitioner
+• MongoDB Certified Developer Associate

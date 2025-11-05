@@ -1,0 +1,35 @@
+
+SAI REDDY
+Email: sai.reddy@student.com | Phone: +91-9000000034
+LinkedIn: linkedin.com/in/saireddy | GitHub: github.com/saireddy
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.7/10
+
+TECHNICAL SKILLS
+Solidity, Ethereum, Web3.js, Hardhat, Smart Contracts, DeFi, React, Git
+
+EXPERIENCE
+Developed DeFi protocols and smart contracts
+
+PROJECTS
+Project 1: Built innovative solutions using Solidity and Ethereum
+• Implemented core features with Web3.js
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Hardhat and Smart Contracts
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Solidity
+• Completed online courses in Ethereum and Web3.js

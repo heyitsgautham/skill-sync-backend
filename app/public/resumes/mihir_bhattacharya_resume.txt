@@ -1,0 +1,35 @@
+
+MIHIR BHATTACHARYA
+Email: mihir.bhattacharya@student.com | Phone: +91-9000000048
+LinkedIn: linkedin.com/in/mihirbhattacharya | GitHub: github.com/mihirbhattacharya
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.4/10
+
+TECHNICAL SKILLS
+Frontend, Vue.js, Nuxt.js, Sass, Webpack, JavaScript, HTML, Git
+
+EXPERIENCE
+Created dynamic web applications with Vue.js
+
+PROJECTS
+Project 1: Built innovative solutions using Frontend and Vue.js
+• Implemented core features with Nuxt.js
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Sass and Webpack
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Frontend
+• Completed online courses in Vue.js and Nuxt.js

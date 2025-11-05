@@ -1,0 +1,35 @@
+
+ANANYA SINGH
+Email: ananya.singh@student.com | Phone: +91-9000000003
+LinkedIn: linkedin.com/in/ananyasingh | GitHub: github.com/ananyasingh
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.2/10
+
+TECHNICAL SKILLS
+Python, Django, Vue.js, MySQL, Docker, CI/CD, REST API, Git
+
+EXPERIENCE
+Built scalable web applications using Django and Vue.js
+
+PROJECTS
+Project 1: Built innovative solutions using Python and Django
+• Implemented core features with Vue.js
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using MySQL and Docker
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Python
+• Completed online courses in Django and Vue.js

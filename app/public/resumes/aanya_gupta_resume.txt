@@ -1,0 +1,35 @@
+
+AANYA GUPTA
+Email: aanya.gupta@student.com | Phone: +91-9000000007
+LinkedIn: linkedin.com/in/aanyagupta | GitHub: github.com/aanyagupta
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.3/10
+
+TECHNICAL SKILLS
+TypeScript, React, Node.js, PostgreSQL, GraphQL, Docker, AWS, Git
+
+EXPERIENCE
+Developed GraphQL APIs and React applications with TypeScript
+
+PROJECTS
+Project 1: Built innovative solutions using TypeScript and React
+• Implemented core features with Node.js
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using PostgreSQL and GraphQL
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in TypeScript
+• Completed online courses in React and Node.js

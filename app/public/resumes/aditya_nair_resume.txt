@@ -1,0 +1,35 @@
+
+ADITYA NAIR
+Email: aditya.nair@student.com | Phone: +91-9000000010
+LinkedIn: linkedin.com/in/adityanair | GitHub: github.com/adityanair
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.5/10
+
+TECHNICAL SKILLS
+Python, TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy, Machine Learning, Deep Learning
+
+EXPERIENCE
+Developed ML models for image classification and NLP tasks
+
+PROJECTS
+Project 1: Built innovative solutions using Python and TensorFlow
+• Implemented core features with PyTorch
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Scikit-learn and Pandas
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Python
+• Completed online courses in TensorFlow and PyTorch

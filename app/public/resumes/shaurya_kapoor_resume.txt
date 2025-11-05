@@ -1,0 +1,35 @@
+
+SHAURYA KAPOOR
+Email: shaurya.kapoor@student.com | Phone: +91-9000000016
+LinkedIn: linkedin.com/in/shauryakapoor | GitHub: github.com/shauryakapoor
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.8/10
+
+TECHNICAL SKILLS
+Python, Deep Learning, PyTorch, CNNs, RNNs, GANs, Transfer Learning, Git
+
+EXPERIENCE
+Implemented deep learning models for image generation and sequence modeling
+
+PROJECTS
+Project 1: Built innovative solutions using Python and Deep Learning
+• Implemented core features with PyTorch
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using CNNs and RNNs
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Python
+• Completed online courses in Deep Learning and PyTorch

@@ -1,0 +1,35 @@
+
+KABIR MEHTA
+Email: kabir.mehta@student.com | Phone: +91-9000000004
+LinkedIn: linkedin.com/in/kabirmehta | GitHub: github.com/kabirmehta
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.2/10
+
+TECHNICAL SKILLS
+JavaScript, React, Node.js, Express, MongoDB, Socket.io, AWS, Git
+
+EXPERIENCE
+Developed real-time chat applications and REST APIs
+
+PROJECTS
+Project 1: Built innovative solutions using JavaScript and React
+• Implemented core features with Node.js
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Express and MongoDB
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in JavaScript
+• Completed online courses in React and Node.js

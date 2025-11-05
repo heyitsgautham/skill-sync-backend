@@ -1,0 +1,35 @@
+
+ADVAIT DESAI
+Email: advait.desai@student.com | Phone: +91-9000000012
+LinkedIn: linkedin.com/in/advaitdesai | GitHub: github.com/advaitdesai
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.6/10
+
+TECHNICAL SKILLS
+Python, Machine Learning, Deep Learning, Computer Vision, OpenCV, TensorFlow, Keras, Git
+
+EXPERIENCE
+Built computer vision models for object detection and facial recognition
+
+PROJECTS
+Project 1: Built innovative solutions using Python and Machine Learning
+• Implemented core features with Deep Learning
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using Computer Vision and OpenCV
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in Python
+• Completed online courses in Machine Learning and Deep Learning

@@ -1,0 +1,35 @@
+
+AYAN CHATTERJEE
+Email: ayan.chatterjee@student.com | Phone: +91-9000000046
+LinkedIn: linkedin.com/in/ayanchatterjee | GitHub: github.com/ayanchatterjee
+
+EDUCATION
+Bachelor of Technology in Computer Science
+Prestigious Institute of Technology | 2022 - 2026 | CGPA: 8.3/10
+
+TECHNICAL SKILLS
+UI/UX Design, Figma, Adobe XD, User Research, Wireframing, Prototyping, HTML, CSS
+
+EXPERIENCE
+Designed user interfaces for web and mobile applications
+
+PROJECTS
+Project 1: Built innovative solutions using UI/UX Design and Figma
+• Implemented core features with Adobe XD
+• Collaborated with team using Git and Agile methodologies
+• Achieved 95% test coverage and optimized performance
+
+Project 2: Developed application using User Research and Wireframing
+• Designed scalable architecture
+• Integrated with third-party APIs
+• Deployed to production environment
+
+ACHIEVEMENTS
+• Won hackathon for innovative solution
+• Contributed to open-source projects
+• Published technical blog posts
+• Mentored junior students
+
+CERTIFICATIONS
+• Certified in UI/UX Design
+• Completed online courses in Figma and Adobe XD
