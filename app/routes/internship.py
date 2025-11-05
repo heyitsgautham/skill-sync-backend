@@ -8,9 +8,10 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from app.database.connection import get_db
-from app.models import User, Internship, UserRole
+from app.models import User, Internship, UserRole, Resume, Application, StudentInternshipMatch
 from app.services.parser_service import InternshipParser
 from app.services.rag_engine import rag_engine
+from app.services.matching_engine import MatchingEngine
 from app.utils.security import get_current_user
 
 router = APIRouter(prefix="/internship", tags=["Internship"])
@@ -165,11 +166,12 @@ def get_my_internships(
         Internship.company_id == current_user.id
     ).order_by(Internship.created_at.desc()).all()
     
-    # Add company name to each internship
+    # Add company name and internship_id to each internship
     result = []
     for internship in internships:
         internship_dict = {
             "id": internship.id,
+            "internship_id": internship.internship_id,  # Include UUID for intelligent filtering
             "company_id": internship.company_id,
             "company_name": current_user.full_name,
             "title": internship.title,
@@ -198,8 +200,14 @@ def match_internships(
     - Uses RAG engine to find best matching internships based on resume embeddings
     - Requires student to have an active resume uploaded
     """
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    logger.info(f"Match internships called by user_id={current_user.id}, role={current_user.role}, top_k={top_k}")
+    
     # Only students can get recommendations
     if current_user.role != UserRole.student:
+        logger.warning(f"Non-student user {current_user.id} tried to access recommendations")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Only students can get internship recommendations"
@@ -220,27 +228,40 @@ def match_internships(
     ).first()
     
     if not resume:
+        logger.warning(f"Student {current_user.id} has no active resume")
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="No active resume found. Please upload a resume first to get personalized recommendations."
         )
     
+    logger.info(f"Found active resume {resume.id} for student {current_user.id}")
+    logger.info(f"Resume details - ID: {resume.id}, file_name: {resume.file_name}, is_active: {resume.is_active}, embedding_id: {resume.embedding_id}")
+    
     try:
         # Get matching internships from RAG engine
+        resume_id_str = str(resume.id)
+        logger.info(f"Calling RAG engine to find matches for resume_id: {resume_id_str} (type: {type(resume_id_str)})")
         matches = rag_engine.find_matching_internships(
-            resume_id=str(resume.id),
+            resume_id=resume_id_str,
             top_k=top_k
         )
         
+        logger.info(f"RAG engine returned {len(matches) if matches else 0} matches")
+        
         if not matches:
+            logger.info("No matches found, returning empty list")
             return []
         
         # Fetch full internship details
         internship_ids = [int(m['internship_id']) for m in matches]
+        logger.info(f"Fetching details for internship IDs: {internship_ids}")
+        
         internships = db.query(Internship).filter(
             Internship.id.in_(internship_ids),
             Internship.is_active == 1
         ).all()
+        
+        logger.info(f"Found {len(internships)} active internships in database")
         
         # Create mapping of internship_id to internship
         internship_map = {str(i.id): i for i in internships}
@@ -265,7 +286,10 @@ def match_internships(
                     "match_score": match['match_score']
                 }
                 recommendations.append(InternshipWithMatchScore(**internship_dict))
+            else:
+                logger.warning(f"Internship {match['internship_id']} not found in database")
         
+        logger.info(f"Returning {len(recommendations)} recommendations")
         return recommendations
         
     except Exception as e:
@@ -402,3 +426,216 @@ def delete_internship(
     rag_engine.delete_internship_embedding(str(internship.id))
     
     return None
+
+
+# Application Management Endpoints
+class ApplicationCreate(BaseModel):
+    cover_letter: Optional[str] = None
+
+
+class ApplicationResponse(BaseModel):
+    id: int
+    student_id: int
+    internship_id: int
+    resume_id: int
+    status: str
+    match_score: Optional[int] = None
+    application_similarity_score: Optional[int] = None
+    used_tailored_resume: int
+    created_at: str
+    
+    class Config:
+        from_attributes = True
+
+
+@router.post("/{internship_id}/apply", response_model=ApplicationResponse, status_code=status.HTTP_201_CREATED)
+def apply_to_internship(
+    internship_id: int,
+    application_data: ApplicationCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Apply to an internship (Student only) - Hybrid Matching Strategy
+    
+    This endpoint implements the hybrid matching approach:
+    1. If student has an active resume, uses it for application
+    2. Calculates application_similarity_score using matching engine
+    3. Falls back to pre-computed base_similarity if available
+    4. Creates application record with hybrid scoring
+    
+    - **internship_id**: ID of the internship to apply to
+    - **cover_letter**: Optional cover letter text
+    """
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    # Only students can apply
+    if current_user.role != UserRole.student:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only students can apply to internships"
+        )
+    
+    # Check if internship exists and is active
+    internship = db.query(Internship).filter(
+        Internship.id == internship_id,
+        Internship.is_active == 1
+    ).first()
+    
+    if not internship:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Internship not found or no longer active"
+        )
+    
+    # Get student's active resume
+    resume = db.query(Resume).filter(
+        Resume.student_id == current_user.id,
+        Resume.is_active == 1
+    ).first()
+    
+    if not resume:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No active resume found. Please upload a resume first."
+        )
+    
+    # Check if already applied
+    existing_application = db.query(Application).filter(
+        Application.student_id == current_user.id,
+        Application.internship_id == internship_id
+    ).first()
+    
+    if existing_application:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="You have already applied to this internship"
+        )
+    
+    try:
+        logger.info(f"Processing application for student {current_user.id} to internship {internship_id}")
+        
+        # Calculate application-specific similarity score
+        matching_engine = MatchingEngine(rag_engine)
+        
+        # Prepare candidate data from resume
+        candidate_data = {
+            'all_skills': resume.parsed_data.get('all_skills', []) if resume.parsed_data else [],
+            'total_experience_years': resume.parsed_data.get('total_experience_years', 0) if resume.parsed_data else 0,
+            'education': resume.parsed_data.get('education', []) if resume.parsed_data else [],
+            'projects': resume.parsed_data.get('projects', []) if resume.parsed_data else [],
+            'certifications': resume.parsed_data.get('certifications', []) if resume.parsed_data else []
+        }
+        
+        # Prepare internship data
+        internship_data = {
+            'required_skills': internship.required_skills or [],
+            'preferred_skills': internship.preferred_skills or [],
+            'min_experience': internship.min_experience or 0,
+            'max_experience': internship.max_experience or 10,
+            'required_education': internship.required_education or ''
+        }
+        
+        # Get embeddings
+        candidate_embedding = resume.embedding or []
+        try:
+            internship_embedding = rag_engine.get_internship_embedding(str(internship.id))
+        except:
+            internship_embedding = []
+        
+        # Calculate match score
+        match_result = matching_engine.calculate_match_score(
+            candidate_data=candidate_data,
+            internship_data=internship_data,
+            candidate_embedding=candidate_embedding,
+            internship_embedding=internship_embedding
+        )
+        
+        application_similarity = int(match_result['overall_score'])
+        logger.info(f"Calculated application similarity: {application_similarity}%")
+        
+        # Try to get pre-computed base similarity as fallback/comparison
+        base_match = db.query(StudentInternshipMatch).filter(
+            StudentInternshipMatch.student_id == current_user.id,
+            StudentInternshipMatch.internship_id == internship_id
+        ).first()
+        
+        # Use application similarity as primary, base as fallback
+        final_match_score = application_similarity
+        if base_match and application_similarity == 0:
+            final_match_score = int(base_match.base_similarity_score)
+            logger.info(f"Using pre-computed base similarity: {final_match_score}%")
+        
+        # Create application
+        new_application = Application(
+            student_id=current_user.id,
+            internship_id=internship_id,
+            resume_id=resume.id,
+            cover_letter=application_data.cover_letter,
+            match_score=final_match_score,
+            application_similarity_score=application_similarity,
+            used_tailored_resume=0  # Can be updated later if we support tailored resumes
+        )
+        
+        db.add(new_application)
+        db.commit()
+        db.refresh(new_application)
+        
+        logger.info(f"✅ Application created successfully: ID {new_application.id}")
+        
+        return ApplicationResponse(
+            id=new_application.id,
+            student_id=new_application.student_id,
+            internship_id=new_application.internship_id,
+            resume_id=new_application.resume_id,
+            status=new_application.status,
+            match_score=new_application.match_score,
+            application_similarity_score=new_application.application_similarity_score,
+            used_tailored_resume=new_application.used_tailored_resume,
+            created_at=str(new_application.created_at)
+        )
+        
+    except Exception as e:
+        import traceback
+        logger.error(f"❌ Error creating application: {str(e)}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error creating application: {str(e)}"
+        )
+
+
+@router.get("/applications/my-applications", response_model=List[ApplicationResponse])
+def get_my_applications(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get all applications for the current student
+    """
+    if current_user.role != UserRole.student:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only students can view their applications"
+        )
+    
+    applications = db.query(Application).filter(
+        Application.student_id == current_user.id
+    ).order_by(Application.created_at.desc()).all()
+    
+    return [
+        ApplicationResponse(
+            id=app.id,
+            student_id=app.student_id,
+            internship_id=app.internship_id,
+            resume_id=app.resume_id,
+            status=app.status,
+            match_score=app.match_score,
+            application_similarity_score=app.application_similarity_score,
+            used_tailored_resume=app.used_tailored_resume,
+            created_at=str(app.created_at)
+        )
+        for app in applications
+    ]

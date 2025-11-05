@@ -22,11 +22,30 @@ class ResumeResponse(BaseModel):
     id: int
     student_id: int
     file_name: str
-    extracted_skills: List[str]
+    extracted_skills: List[str] = []
     is_active: int
+    created_at: str | None = None
     
     class Config:
         from_attributes = True
+        
+    @classmethod
+    def from_orm(cls, obj):
+        # Try to get skills from extracted_skills field first, then from parsed_data
+        skills = []
+        if obj.extracted_skills:
+            skills = obj.extracted_skills
+        elif obj.parsed_data and isinstance(obj.parsed_data, dict):
+            skills = obj.parsed_data.get('all_skills', [])
+        
+        return cls(
+            id=obj.id,
+            student_id=obj.student_id,
+            file_name=obj.file_name,
+            extracted_skills=skills,
+            is_active=obj.is_active,
+            created_at=str(obj.created_at) if obj.created_at else None
+        )
 
 
 @router.post("/upload", response_model=ResumeResponse, status_code=status.HTTP_201_CREATED)
@@ -110,7 +129,7 @@ async def upload_resume(
         db.commit()
         db.refresh(new_resume)
         
-        return new_resume
+        return ResumeResponse.from_orm(new_resume)
         
     except Exception as e:
         # Cleanup on error
@@ -141,7 +160,7 @@ def get_my_resumes(
         Resume.student_id == current_user.id
     ).order_by(Resume.created_at.desc()).all()
     
-    return resumes
+    return [ResumeResponse.from_orm(resume) for resume in resumes]
 
 
 @router.put("/{resume_id}/activate", response_model=ResumeResponse)
@@ -152,6 +171,50 @@ def activate_resume(
 ):
     """
     Set a resume as active (deactivates all other resumes)
+    """
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    logger.info(f"Activating resume {resume_id} for user {current_user.id}")
+    
+    resume = db.query(Resume).filter(
+        Resume.id == resume_id,
+        Resume.student_id == current_user.id
+    ).first()
+    
+    if not resume:
+        logger.warning(f"Resume {resume_id} not found for user {current_user.id}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Resume not found"
+        )
+    
+    # Deactivate all other resumes for this student
+    deactivated_count = db.query(Resume).filter(
+        Resume.student_id == current_user.id,
+        Resume.is_active == 1
+    ).update({"is_active": 0})
+    
+    logger.info(f"Deactivated {deactivated_count} resumes for user {current_user.id}")
+    
+    # Activate this resume
+    resume.is_active = 1
+    db.commit()
+    db.refresh(resume)
+    
+    logger.info(f"Resume {resume_id} activated successfully for user {current_user.id}")
+    
+    return ResumeResponse.from_orm(resume)
+
+
+@router.get("/{resume_id}/parsed-data")
+def get_resume_parsed_data(
+    resume_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get parsed data for a specific resume
     """
     resume = db.query(Resume).filter(
         Resume.id == resume_id,
@@ -164,18 +227,33 @@ def activate_resume(
             detail="Resume not found"
         )
     
-    # Deactivate all other resumes for this student
-    db.query(Resume).filter(
-        Resume.student_id == current_user.id,
-        Resume.is_active == 1
-    ).update({"is_active": 0})
-    
-    # Activate this resume
-    resume.is_active = 1
-    db.commit()
-    db.refresh(resume)
-    
-    return resume
+    # Return parsed data if available
+    if resume.parsed_data:
+        # Calculate processing details
+        skills_count = len(resume.parsed_data.get('all_skills', []))
+        experience = resume.parsed_data.get('total_experience_years', 0)
+        education_count = len(resume.parsed_data.get('education', []))
+        projects_count = len(resume.parsed_data.get('projects', []))
+        certifications_count = len(resume.parsed_data.get('certifications', []))
+        
+        return {
+            "success": True,
+            "resume_id": resume.id,
+            "file_name": resume.file_name,
+            "structured_data": resume.parsed_data,
+            "processing_details": {
+                "skills_extracted": skills_count,
+                "experience_calculated": f"{experience} years",
+                "education_found": education_count,
+                "projects_found": projects_count,
+                "certifications_found": certifications_count
+            }
+        }
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No parsed data available for this resume"
+        )
 
 
 @router.delete("/{resume_id}", status_code=status.HTTP_204_NO_CONTENT)

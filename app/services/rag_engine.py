@@ -168,25 +168,51 @@ class RAGEngine:
         Returns:
             List of matching internships with scores
         """
+        import logging
+        logger = logging.getLogger(__name__)
+        
         try:
+            logger.info(f"[RAG] Finding matching internships for resume_id: {resume_id}")
+            
+            # Check what's in the resume collection
+            all_resumes = self.resume_collection.get()
+            logger.info(f"[RAG] Total resumes in collection: {len(all_resumes['ids']) if all_resumes['ids'] else 0}")
+            logger.info(f"[RAG] Resume IDs in collection: {all_resumes['ids']}")
+            
             # Get resume embedding
+            lookup_id = f"resume_{resume_id}"
+            logger.info(f"[RAG] Looking for resume with ID: {lookup_id}")
+            
             resume_result = self.resume_collection.get(
-                ids=[f"resume_{resume_id}"],
+                ids=[lookup_id],
                 include=["embeddings", "metadatas"]
             )
             
+            logger.info(f"[RAG] Resume lookup result IDs: {resume_result.get('ids', [])}")
+            logger.info(f"[RAG] Has embeddings: {resume_result.get('embeddings') is not None}")
+            
             # Check if embeddings exist
             if 'embeddings' not in resume_result or resume_result['embeddings'] is None or len(resume_result['embeddings']) == 0:
+                logger.warning(f"[RAG] No embeddings found for resume {resume_id}")
                 return []
             
             resume_embedding = resume_result['embeddings'][0]
+            logger.info(f"[RAG] Found resume embedding with dimension: {len(resume_embedding)}")
+            
+            # Check what's in the internship collection
+            all_internships = self.internship_collection.get()
+            logger.info(f"[RAG] Total internships in collection: {len(all_internships['ids']) if all_internships['ids'] else 0}")
+            logger.info(f"[RAG] Internship IDs in collection: {all_internships['ids']}")
             
             # Query internship collection
+            logger.info(f"[RAG] Querying for top {top_k} matches")
             results = self.internship_collection.query(
                 query_embeddings=[resume_embedding],
                 n_results=top_k,
                 include=["metadatas", "distances"]
             )
+            
+            logger.info(f"[RAG] Query returned {len(results['metadatas'][0]) if results['metadatas'] else 0} results")
             
             # Format results with match scores using min-max normalization
             matches = []
@@ -309,6 +335,58 @@ class RAGEngine:
         except Exception as e:
             print(f"Error finding matches: {str(e)}")
             return []
+    
+    def get_resume_embedding(self, resume_id: str) -> Optional[List[float]]:
+        """
+        Retrieve resume embedding from vector database
+        
+        Args:
+            resume_id: Unique identifier for resume
+            
+        Returns:
+            Embedding vector or None if not found
+        """
+        try:
+            result = self.resume_collection.get(
+                ids=[f"resume_{resume_id}"],
+                include=["embeddings"]
+            )
+            
+            # Check if result has embeddings
+            if result and 'embeddings' in result and result['embeddings'] is not None:
+                if len(result['embeddings']) > 0:
+                    return result['embeddings'][0]
+            return None
+            
+        except Exception as e:
+            print(f"Error retrieving resume embedding: {str(e)}")
+            return None
+    
+    def get_internship_embedding(self, internship_id: str) -> Optional[List[float]]:
+        """
+        Retrieve internship embedding from vector database
+        
+        Args:
+            internship_id: Unique identifier for internship
+            
+        Returns:
+            Embedding vector or None if not found
+        """
+        try:
+            result = self.internship_collection.get(
+                ids=[f"internship_{internship_id}"],
+                include=["embeddings"]
+            )
+            
+            # Check if result has embeddings
+            if result and 'embeddings' in result and result['embeddings'] is not None:
+                if len(result['embeddings']) > 0:
+                    return result['embeddings'][0]
+            return None
+            
+        except Exception as e:
+            print(f"Error retrieving internship embedding: {str(e)}")
+            return None
     
     def delete_resume_embedding(self, resume_id: str) -> bool:
         """Delete resume embedding from vector database"""

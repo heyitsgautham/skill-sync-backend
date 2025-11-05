@@ -123,3 +123,84 @@ async def get_current_user(
         )
     
     return user
+
+
+async def get_current_company(
+    current_user = Depends(get_current_user)
+):
+    """
+    Get current authenticated company user
+    Ensures the user has 'company' role
+    
+    Args:
+        current_user: Current authenticated user from get_current_user
+    
+    Returns:
+        Current company user object
+    
+    Raises:
+        HTTPException: If user is not a company
+    """
+    from app.models.user import UserRole
+    
+    if current_user.role != UserRole.company:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only companies can access this endpoint"
+        )
+    
+    return current_user
+
+
+async def get_current_student(
+    current_user = Depends(get_current_user)
+):
+    """
+    Get current authenticated student user
+    Ensures the user has 'student' role
+    
+    Args:
+        current_user: Current authenticated user from get_current_user
+    
+    Returns:
+        Current student user object
+    
+    Raises:
+        HTTPException: If user is not a student
+    """
+    from app.models.user import UserRole
+    
+    if current_user.role != UserRole.student:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only students can access this endpoint"
+        )
+    
+    return current_user
+
+
+async def get_current_admin(
+    current_user = Depends(get_current_user)
+):
+    """
+    Get current authenticated admin user
+    Ensures the user has 'admin' role
+    
+    Args:
+        current_user: Current authenticated user from get_current_user
+    
+    Returns:
+        Current admin user object
+    
+    Raises:
+        HTTPException: If user is not an admin
+    """
+    from app.models.user import UserRole
+    
+    if current_user.role != UserRole.admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only administrators can access this endpoint"
+        )
+    
+    return current_user
