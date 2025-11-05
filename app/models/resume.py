@@ -5,8 +5,9 @@ Resume Model - Student resume storage and metadata
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON, ARRAY, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.database.connection import Base
+from app.database.connection import Base, DATABASE_URL
 import uuid
+import os
 
 
 class Resume(Base):
@@ -23,7 +24,8 @@ class Resume(Base):
     # Intelligent parsing fields
     parsed_data = Column(JSON, nullable=True)  # Structured data from Gemini extraction
     extracted_skills = Column(JSON, nullable=True)  # List of skills extracted from resume
-    embedding = Column(ARRAY(Float), nullable=True)  # HuggingFace embedding vector
+    # Use JSON for SQLite compatibility, ARRAY for PostgreSQL
+    embedding = Column(JSON if DATABASE_URL.startswith("sqlite") else ARRAY(Float), nullable=True)
     embedding_id = Column(String(255), nullable=True)  # Reference to vector DB embedding
     
     is_active = Column(Integer, default=1)  # 1 = active, 0 = inactive
