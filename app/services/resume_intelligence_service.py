@@ -24,7 +24,10 @@ class ResumeIntelligenceService:
         """Initialize Gemini AI for structured extraction"""
         google_api_key = os.getenv("GOOGLE_API_KEY")
         if not google_api_key:
-            raise ValueError("GOOGLE_API_KEY not found in environment variables")
+            # Allow initialization without API key for testing environments
+            # The API key will be checked when methods are actually called
+            self.model = None
+            return
         
         genai.configure(api_key=google_api_key)
         self.model = genai.GenerativeModel('gemini-2.5-flash')
@@ -114,6 +117,9 @@ Resume Text:
 
 Return ONLY the JSON object, no markdown, no explanation.
 """
+        
+        if self.model is None:
+            raise ValueError("GOOGLE_API_KEY not configured. Cannot extract structured data.")
         
         try:
             response = self.model.generate_content(prompt)

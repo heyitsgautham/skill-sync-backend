@@ -23,11 +23,35 @@ from app.utils.security import get_current_user, get_current_company
 router = APIRouter(prefix="/api/filter", tags=["intelligent-filtering"])
 
 
-# Initialize services
+# Initialize services with lazy initialization pattern
 resume_parser = ResumeParser()
-intelligence_service = ResumeIntelligenceService()
-rag_engine = RAGEngine()
-matching_engine = MatchingEngine(rag_engine)
+_intelligence_service = None
+_rag_engine = None
+_matching_engine = None
+
+
+def get_intelligence_service():
+    """Lazy initialization of intelligence service"""
+    global _intelligence_service
+    if _intelligence_service is None:
+        _intelligence_service = ResumeIntelligenceService()
+    return _intelligence_service
+
+
+def get_rag_engine():
+    """Lazy initialization of RAG engine"""
+    global _rag_engine
+    if _rag_engine is None:
+        _rag_engine = RAGEngine()
+    return _rag_engine
+
+
+def get_matching_engine():
+    """Lazy initialization of matching engine"""
+    global _matching_engine
+    if _matching_engine is None:
+        _matching_engine = MatchingEngine(get_rag_engine())
+    return _matching_engine
 
 
 @router.post("/parse-resume")
@@ -80,12 +104,12 @@ async def parse_and_extract_resume(
         
         # Extract structured data using Gemini
         logger.info(f"[RESUME UPLOAD] Extracting structured data using Gemini...")
-        structured_data = intelligence_service.extract_structured_data(text)
+        structured_data = get_intelligence_service().extract_structured_data(text)
         logger.info(f"[RESUME UPLOAD] Extracted {len(structured_data.get('all_skills', []))} skills")
         
         # Generate embedding
         embedding_text = f"{text}\n\nSkills: {', '.join(structured_data.get('all_skills', []))}"
-        embedding = rag_engine.generate_embedding(embedding_text)
+        embedding = get_rag_engine().generate_embedding(embedding_text)
         logger.info(f"[RESUME UPLOAD] Generated embedding with dimension: {len(embedding)}")
         
         # Deactivate all other resumes for this student
@@ -115,7 +139,7 @@ async def parse_and_extract_resume(
         
         # Store in vector database using integer ID (not UUID resume_id)
         logger.info(f"[RESUME UPLOAD] Storing embedding in ChromaDB with ID: resume_{resume.id}")
-        embedding_id = rag_engine.store_resume_embedding(
+        embedding_id = get_rag_engine().store_resume_embedding(
             resume_id=str(resume.id),  # Use integer id for consistency
             content=text,
             skills=structured_data.get('all_skills', []),
@@ -548,7 +572,7 @@ async def rank_candidates_for_internship(
         }
         
         # Rank candidates
-        ranked_results = matching_engine.rank_candidates(
+        ranked_results = get_matching_engine().rank_candidates(
             candidates=candidates,
             internship_data=internship_data,
             limit=limit
@@ -671,17 +695,17 @@ async def calculate_match_score(
         }
         
         # Calculate match score
-        match_result = matching_engine.calculate_match_score(
+        match_result = get_matching_engine().calculate_match_score(
             candidate_data=candidate_data,
             internship_data=internship_data,
             candidate_embedding=resume.embedding,
-            internship_embedding=rag_engine.generate_embedding(
+            internship_embedding=get_rag_engine().generate_embedding(
                 f"{internship.title} {internship.description}"
             )
         )
         
         # Generate explanation
-        explanation = matching_engine.generate_match_explanation(
+        explanation = get_matching_engine().generate_match_explanation(
             candidate_data=candidate_data,
             internship_data=internship_data,
             match_result=match_result

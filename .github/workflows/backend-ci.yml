@@ -31,6 +31,7 @@ jobs:
         echo "SECRET_KEY=test-secret-key-for-ci-cd-testing" >> .env
         echo "ALGORITHM=HS256" >> .env
         echo "ACCESS_TOKEN_EXPIRE_MINUTES=30" >> .env
+        echo "GOOGLE_API_KEY=test-api-key-for-ci" >> .env
     
     - name: Run tests
       run: |
