@@ -1,0 +1,38 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest-cov
+    
+    - name: Create test environment file
+      run: |
+        echo "DATABASE_URL=sqlite:///./test.db" > .env
+        echo "SECRET_KEY=test-secret-key-for-ci-cd-testing" >> .env
+        echo "ALGORITHM=HS256" >> .env
+        echo "ACCESS_TOKEN_EXPIRE_MINUTES=30" >> .env
+        echo "GOOGLE_API_KEY=test-api-key-for-ci" >> .env
+    
+    - name: Run tests
+      run: |
+        pytest tests/ -v --cov=app --cov-report=term
