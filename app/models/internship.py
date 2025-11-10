@@ -29,6 +29,10 @@ class Internship(Base):
     location = Column(String(255), nullable=True)
     duration = Column(String(100), nullable=True)  # e.g., "3 months", "6 months"
     stipend = Column(String(100), nullable=True)
+    
+    # Content hash for intelligent caching (detect content changes)
+    content_hash = Column(String(64), nullable=True)  # SHA-256 hash of description
+    
     is_active = Column(Integer, default=1)  # 1 = active, 0 = inactive
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

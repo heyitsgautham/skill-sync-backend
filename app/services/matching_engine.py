@@ -6,13 +6,17 @@ Combines semantic matching (embeddings) with rule-based scoring
 import os
 import json
 import re
+import logging
 from typing import Dict, List, Optional, Tuple
 import numpy as np
 from datetime import datetime
-import google.generativeai as genai
 from dotenv import load_dotenv
 
+from app.utils.gemini_key_manager import get_gemini_key_manager
+
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 class MatchingEngine:
@@ -32,21 +36,17 @@ class MatchingEngine:
         """
         self.rag_engine = rag_engine
         
-        # Initialize Gemini for explanations
-        google_api_key = os.getenv("GOOGLE_API_KEY")
-        if google_api_key:
-            genai.configure(api_key=google_api_key)
-            self.llm_model = genai.GenerativeModel('gemini-2.5-flash')
-        else:
-            self.llm_model = None
+        # Initialize Gemini key manager for explanations
+        self.key_manager = get_gemini_key_manager()
+        logger.info("✅ MatchingEngine initialized with GeminiKeyManager")
         
-        # Scoring weights
+        # Scoring weights - Rebalanced to prioritize actual qualifications over semantic similarity
         self.weights = {
-            'semantic_similarity': 0.35,      # 35% - Overall resume-JD match
-            'skills_match': 0.30,             # 30% - Specific skills required
-            'experience_match': 0.20,         # 20% - Years of experience
-            'education_match': 0.10,          # 10% - Education level
-            'projects_certifications': 0.05   # 5% - Additional credentials
+            'skills_match': 0.45,             # 45% - Specific skills required (increased from 30%)
+            'experience_match': 0.25,         # 25% - Years of experience (increased from 20%)
+            'semantic_similarity': 0.10,      # 10% - Overall resume-JD match (reduced from 35%)
+            'education_match': 0.10,          # 10% - Education level (same)
+            'projects_certifications': 0.10   # 10% - Additional credentials (increased from 5%)
         }
     
     def calculate_match_score(
@@ -138,13 +138,15 @@ class MatchingEngine:
         vec2: List[float]
     ) -> float:
         """Calculate cosine similarity between two vectors"""
-        # Log and return default score if embeddings are missing
+        # DO NOT USE FALLBACK SCORES - Log error and raise exception instead
         if vec1 is None or vec2 is None or len(vec1) == 0 or len(vec2) == 0:
-            print(f"⚠️  FALLBACK: Using default 50% semantic similarity (embeddings missing)")
-            print(f"   vec1 present: {vec1 is not None and len(vec1) > 0}, vec2 present: {vec2 is not None and len(vec2) > 0}")
-            return 0.5  # Default 50% similarity when embeddings unavailable
+            error_msg = "  CRITICAL: Missing embeddings detected! Cannot calculate similarity."
+            logger.error(error_msg)
+            logger.error(f"   vec1 present: {vec1 is not None and len(vec1) > 0}")
+            logger.error(f"   vec2 present: {vec2 is not None and len(vec2) > 0}")
+            raise ValueError("Cannot calculate similarity: embeddings are missing or empty")
         
-        print(f"✅ Using real embeddings for semantic similarity (vec1: {len(vec1)}D, vec2: {len(vec2)}D)")
+        logger.debug(f"✅ Calculating cosine similarity (vec1: {len(vec1)}D, vec2: {len(vec2)}D)")
         
         vec1_np = np.array(vec1)
         vec2_np = np.array(vec2)
@@ -154,10 +156,11 @@ class MatchingEngine:
         norm2 = np.linalg.norm(vec2_np)
         
         if norm1 == 0 or norm2 == 0:
-            return 0.0
+            logger.error("  Zero vector detected - cannot calculate similarity")
+            raise ValueError("Cannot calculate similarity: zero vector detected")
         
         similarity = float(dot_product / (norm1 * norm2))
-        print(f"   Calculated similarity: {similarity:.4f}")
+        logger.debug(f"   Calculated similarity: {similarity:.4f}")
         return similarity
     
     def _calculate_skills_match(
@@ -363,9 +366,6 @@ class MatchingEngine:
         Returns:
             Detailed explanation string
         """
-        if not self.llm_model:
-            return self._generate_fallback_explanation(match_result)
-        
         prompt = f"""
 You are an HR assistant explaining why a candidate matches (or doesn't match) an internship position.
 
@@ -399,10 +399,19 @@ Format as bullet points. Be specific and reference actual skills/experience.
 """
         
         try:
-            response = self.llm_model.generate_content(prompt)
-            return response.text.strip()
+            logger.info("📤 Generating match explanation...")
+            result = self.key_manager.generate_content(
+                prompt=prompt,
+                model="gemini-2.5-flash",
+                purpose="matching_explanation",
+                temperature=0.3,
+                max_output_tokens=500,
+                max_retries=3
+            )
+            logger.info("✅ Match explanation generated")
+            return result
         except Exception as e:
-            print(f"Error generating explanation: {e}")
+            logger.error(f"  Error generating explanation: {e}")
             return self._generate_fallback_explanation(match_result)
     
     def _generate_fallback_explanation(self, match_result: Dict) -> str:

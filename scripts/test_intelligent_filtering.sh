@@ -35,7 +35,7 @@ STUDENT_TOKEN=$(curl -s -X POST "$BASE_URL/api/auth/login" \
   -d "username=intelligent.filter.test@example.com&password=Test123!" | jq -r '.access_token')
 
 if [ "$STUDENT_TOKEN" == "null" ] || [ -z "$STUDENT_TOKEN" ]; then
-  echo -e "${RED}❌ Student login failed${NC}"
+  echo -e "${RED}  Student login failed${NC}"
   exit 1
 fi
 
@@ -126,7 +126,7 @@ COMPANY_TOKEN=$(curl -s -X POST "$BASE_URL/api/auth/login" \
   -d "username=intelligent.company.test@example.com&password=Test123!" | jq -r '.access_token')
 
 if [ "$COMPANY_TOKEN" == "null" ] || [ -z "$COMPANY_TOKEN" ]; then
-  echo -e "${RED}❌ Company login failed${NC}"
+  echo -e "${RED}  Company login failed${NC}"
   exit 1
 fi
 

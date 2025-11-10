@@ -13,6 +13,7 @@ python-jose[cryptography]
 passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
 python-dotenv
+PyJWT  # JWT token generation for temporary access
 
 # Validation
 pydantic
@@ -27,12 +28,18 @@ pytest-asyncio
 httpx
 
 # Document Processing
-PyMuPDF
+PyMuPDF  # PDF text extraction and redaction (fitz)
+PyPDF2  # PDF manipulation
 python-docx
 pdfplumber
+reportlab  # PDF generation and manipulation
+openpyxl  # Excel file generation
+
+# Cloud Storage
+boto3
 
 # AI/ML and Vector DB
-google-generativeai
+google-genai  # NEW Google Gemini SDK (replaces google-generativeai)
 langchain
 langchain-google-genai
 langchain-huggingface

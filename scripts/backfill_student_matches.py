@@ -123,7 +123,7 @@ def run_backfill():
         return True
         
     except Exception as e:
-        print(f"\n❌ Backfill failed: {str(e)}")
+        print(f"\n  Backfill failed: {str(e)}")
         import traceback
         traceback.print_exc()
         return False
@@ -171,7 +171,7 @@ def verify_backfill():
         return True
         
     except Exception as e:
-        print(f"\n❌ Verification failed: {str(e)}")
+        print(f"\n  Verification failed: {str(e)}")
         return False
 
 
@@ -235,7 +235,7 @@ def main():
     
     # Step 1: Check existing data
     if not check_existing_data():
-        print("\n❌ Cannot proceed without data. Please ensure:")
+        print("\n  Cannot proceed without data. Please ensure:")
         print("   1. Students have uploaded resumes")
         print("   2. Companies have posted internships")
         print("   3. Database migration has been run")
@@ -243,12 +243,12 @@ def main():
     
     # Step 2: Confirm with user
     if not confirm_backfill():
-        print("\n❌ Backfill cancelled by user.")
+        print("\n  Backfill cancelled by user.")
         sys.exit(0)
     
     # Step 3: Run backfill
     if not run_backfill():
-        print("\n❌ Backfill failed. Please check errors above and try again.")
+        print("\n  Backfill failed. Please check errors above and try again.")
         sys.exit(1)
     
     # Step 4: Verify

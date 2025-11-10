@@ -13,7 +13,7 @@ print('🔍 Testing Gemini API connection...\n')
 
 api_key = os.getenv('GOOGLE_API_KEY')
 if not api_key:
-    print('❌ GOOGLE_API_KEY not found in environment')
+    print('  GOOGLE_API_KEY not found in environment')
     exit(1)
 
 print(f'✅ API Key found: {api_key[:10]}...{api_key[-5:]}')
@@ -30,6 +30,6 @@ try:
     print('✅ Ready for intelligent resume parsing!')
     
 except Exception as e:
-    print(f'\n❌ Gemini API Error: {e}')
+    print(f'\n  Gemini API Error: {e}')
     print('Please check your API key and internet connection')
     exit(1)

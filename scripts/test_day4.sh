@@ -30,7 +30,7 @@ REGISTER_RESPONSE=$(curl -s -X POST "$BASE_URL/auth/register" \
 if echo "$REGISTER_RESPONSE" | grep -q "email"; then
     echo -e "${GREEN}✅ User registered successfully${NC}"
 else
-    echo -e "${RED}❌ Registration failed or user already exists${NC}"
+    echo -e "${RED}  Registration failed or user already exists${NC}"
     # Try to login instead
     echo "Attempting to login with existing user..."
 fi
@@ -48,7 +48,7 @@ LOGIN_RESPONSE=$(curl -s -X POST "$BASE_URL/auth/login" \
 TOKEN=$(echo "$LOGIN_RESPONSE" | grep -o '"access_token":"[^"]*"' | cut -d'"' -f4)
 
 if [ -z "$TOKEN" ]; then
-    echo -e "${RED}❌ Login failed${NC}"
+    echo -e "${RED}  Login failed${NC}"
     echo "Response: $LOGIN_RESPONSE"
     exit 1
 else
@@ -85,7 +85,7 @@ EOF
 if [ -f /tmp/test_resume.txt ]; then
     echo -e "${GREEN}✅ Sample resume created${NC}"
 else
-    echo -e "${RED}❌ Failed to create sample resume${NC}"
+    echo -e "${RED}  Failed to create sample resume${NC}"
 fi
 
 # Test 4: Upload Resume (Note: API expects PDF/DOCX, but we'll test the endpoint)
@@ -114,7 +114,7 @@ if echo "$MY_RESUMES" | grep -q "\["; then
     RESUME_COUNT=$(echo "$MY_RESUMES" | grep -o '"id":' | wc -l)
     echo "Found $RESUME_COUNT resume(s)"
 else
-    echo -e "${RED}❌ Failed to fetch resumes${NC}"
+    echo -e "${RED}  Failed to fetch resumes${NC}"
     echo "Response: $MY_RESUMES"
 fi
 
@@ -148,7 +148,7 @@ except:
     pass
 "
 else
-    echo -e "${RED}❌ Failed to fetch internships${NC}"
+    echo -e "${RED}  Failed to fetch internships${NC}"
     echo "Response: $INTERNSHIPS"
 fi
 
@@ -162,7 +162,7 @@ if echo "$PAGINATED" | grep -q "title"; then
     PAGE_COUNT=$(echo "$PAGINATED" | grep -o '"id":' | wc -l)
     echo -e "${GREEN}✅ Pagination working (fetched $PAGE_COUNT items)${NC}"
 else
-    echo -e "${RED}❌ Pagination test failed${NC}"
+    echo -e "${RED}  Pagination test failed${NC}"
 fi
 
 # Test 8: Get specific internship details
@@ -177,10 +177,10 @@ if [ ! -z "$INTERNSHIP_ID" ]; then
     if echo "$DETAILS" | grep -q "title"; then
         echo -e "${GREEN}✅ Successfully fetched internship #$INTERNSHIP_ID${NC}"
     else
-        echo -e "${RED}❌ Failed to fetch internship details${NC}"
+        echo -e "${RED}  Failed to fetch internship details${NC}"
     fi
 else
-    echo -e "${RED}❌ No internship ID found for testing${NC}"
+    echo -e "${RED}  No internship ID found for testing${NC}"
 fi
 
 # Summary

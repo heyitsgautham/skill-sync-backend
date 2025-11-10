@@ -139,7 +139,7 @@ def run_migration():
             
         except Exception as e:
             trans.rollback()
-            print(f"\n❌ Migration failed: {str(e)}")
+            print(f"\n  Migration failed: {str(e)}")
             raise
 
 
@@ -158,7 +158,7 @@ def verify_migration():
         if result.scalar():
             print("   ✅ student_internship_matches table exists")
         else:
-            print("   ❌ student_internship_matches table NOT found")
+            print("     student_internship_matches table NOT found")
         
         # Check if indexes exist
         result = conn.execute(text("""
@@ -202,7 +202,7 @@ if __name__ == "__main__":
         print("=" * 70)
         
     except Exception as e:
-        print(f"\n❌ Migration failed with error: {str(e)}")
+        print(f"\n  Migration failed with error: {str(e)}")
         import traceback
         traceback.print_exc()
         sys.exit(1)

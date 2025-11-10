@@ -68,74 +68,26 @@ async def upload_resume(
             detail="Only students can upload resumes"
         )
     
-    # Validate file type
-    allowed_extensions = ['.pdf', '.docx', '.doc', '.txt']
-    file_extension = os.path.splitext(file.filename)[1].lower()
-    
-    if file_extension not in allowed_extensions:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Invalid file type. Allowed: {', '.join(allowed_extensions)}"
-        )
-    
-    # Create upload directory if it doesn't exist
-    upload_dir = "app/public/resumes"
-    os.makedirs(upload_dir, exist_ok=True)
-    
-    # Generate unique filename
-    file_path = os.path.join(upload_dir, f"{current_user.id}_{file.filename}")
-    
     try:
-        # Save file
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        from app.services.resume_service import ResumeService
         
-        # Parse resume
-        parsed_data = ResumeParser.parse_resume(file_path)
-        
-        # Deactivate old resumes
-        db.query(Resume).filter(
-            Resume.student_id == current_user.id,
-            Resume.is_active == 1
-        ).update({"is_active": 0})
-        
-        # Create new resume record
-        new_resume = Resume(
+        # Use the reusable service function
+        new_resume = await ResumeService.upload_and_process_resume(
+            file=file,
             student_id=current_user.id,
-            file_path=file_path,
-            file_name=file.filename,
-            parsed_content=parsed_data['parsed_content'],
-            extracted_skills=parsed_data['extracted_skills'],
-            is_active=1
+            db=db,
+            is_tailored=False,
+            deactivate_others=True
         )
-        
-        db.add(new_resume)
-        db.commit()
-        db.refresh(new_resume)
-        
-        # Store embedding in vector DB
-        embedding_id = rag_engine.store_resume_embedding(
-            resume_id=str(new_resume.id),
-            content=parsed_data['parsed_content'],
-            skills=parsed_data['extracted_skills'],
-            metadata={
-                "student_id": current_user.id,
-                "file_name": file.filename
-            }
-        )
-        
-        # Update resume with embedding ID
-        new_resume.embedding_id = embedding_id
-        db.commit()
-        db.refresh(new_resume)
         
         return ResumeResponse.from_orm(new_resume)
         
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
     except Exception as e:
-        # Cleanup on error
-        if os.path.exists(file_path):
-            os.remove(file_path)
-        db.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error processing resume: {str(e)}"
@@ -148,7 +100,7 @@ def get_my_resumes(
     current_user: User = Depends(get_current_user)
 ):
     """
-    Get all resumes for current student
+    Get all resumes for current student (excluding tailored resumes)
     """
     if current_user.role != UserRole.student:
         raise HTTPException(
@@ -156,8 +108,10 @@ def get_my_resumes(
             detail="Only students can view resumes"
         )
     
+    # Exclude tailored resumes (is_tailored = 1) from the list
     resumes = db.query(Resume).filter(
-        Resume.student_id == current_user.id
+        Resume.student_id == current_user.id,
+        Resume.is_tailored == 0  # Only show base resumes
     ).order_by(Resume.created_at.desc()).all()
     
     return [ResumeResponse.from_orm(resume) for resume in resumes]
@@ -274,6 +228,18 @@ def delete_resume(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Resume not found"
+        )
+    
+    # Check if resume is used in any applications
+    from app.models.application import Application
+    applications_count = db.query(Application).filter(
+        Application.resume_id == resume_id
+    ).count()
+    
+    if applications_count > 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Cannot delete resume. It is being used in {applications_count} application(s). Please withdraw or delete those applications first."
         )
     
     # Delete from vector DB

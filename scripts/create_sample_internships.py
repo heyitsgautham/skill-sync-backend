@@ -170,7 +170,7 @@ def create_sample_internships():
         print(f"📊 Total internships in database: {db.query(Internship).count()}")
         
     except Exception as e:
-        print(f"❌ Error creating sample internships: {e}")
+        print(f"  Error creating sample internships: {e}")
         db.rollback()
         raise
     finally:

@@ -55,9 +55,9 @@ def check_collections():
     print("=" * 60)
     
     if not resume_data['ids']:
-        print("❌ No resumes in vector DB. Upload a resume to populate.")
+        print("  No resumes in vector DB. Upload a resume to populate.")
     if not internship_data['ids']:
-        print("❌ No internships in vector DB. Create internships to populate.")
+        print("  No internships in vector DB. Create internships to populate.")
     if resume_data['ids'] and internship_data['ids']:
         print("✅ Both collections have data. Matching should work!")
     

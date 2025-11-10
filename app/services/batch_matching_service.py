@@ -126,7 +126,7 @@ class BatchMatchingService:
                         matches_computed += 1
                     
                 except Exception as e:
-                    logger.error(f"❌ Error computing match for student {student.id} and internship {internship.id}: {str(e)}")
+                    logger.error(f"  Error computing match for student {student.id} and internship {internship.id}: {str(e)}")
                     matches_failed += 1
                     continue
             
@@ -188,13 +188,23 @@ class BatchMatchingService:
             'required_education': internship.required_education or ''
         }
         
-        # Get embeddings (fallback to empty if not available)
-        candidate_embedding = resume.embedding or []
+        # Get embeddings from ChromaDB (fallback to empty if not available)
+        # Note: get_resume_embedding expects ID without "resume_" prefix
+        try:
+            resume_chroma_id = resume.embedding_id.replace('resume_', '') if resume.embedding_id else str(resume.id)
+            candidate_embedding = rag_engine.get_resume_embedding(resume_chroma_id)
+            if candidate_embedding is None:
+                candidate_embedding = []
+        except Exception as e:
+            candidate_embedding = []
         
         # Get internship embedding from RAG engine
         try:
-            internship_embedding = rag_engine.get_internship_embedding(str(internship.id))
-        except:
+            internship_chroma_id = str(internship.id)
+            internship_embedding = rag_engine.get_internship_embedding(internship_chroma_id)
+            if internship_embedding is None:
+                internship_embedding = []
+        except Exception as e:
             internship_embedding = []
         
         # Calculate match score

@@ -79,6 +79,6 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"\n❌ Error: {str(e)}")
+        print(f"\n  Error: {str(e)}")
         import traceback
         traceback.print_exc()

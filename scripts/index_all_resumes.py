@@ -65,7 +65,7 @@ def index_all_resumes():
                     skipped_count += 1
                     
             except Exception as e:
-                print(f"❌ Error indexing {student.full_name}: {str(e)}")
+                print(f"  Error indexing {student.full_name}: {str(e)}")
                 error_count += 1
         
         print()
@@ -74,7 +74,7 @@ def index_all_resumes():
         print("=" * 80)
         print(f"✅ Successfully indexed: {indexed_count} resumes")
         print(f"⏭️  Skipped (already indexed): {skipped_count} resumes")
-        print(f"❌ Errors: {error_count} resumes")
+        print(f"  Errors: {error_count} resumes")
         print()
         
         # Verify final count
@@ -83,7 +83,7 @@ def index_all_resumes():
         print("=" * 80)
         
     except Exception as e:
-        print(f"\n❌ Error: {str(e)}")
+        print(f"\n  Error: {str(e)}")
         raise
     finally:
         db.close()

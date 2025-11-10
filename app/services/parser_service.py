@@ -174,11 +174,13 @@ class InternshipParser:
         Returns:
             Dictionary with parsed and enriched data
         """
-        description = data.get('description', '')
+        # DO NOT auto-extract skills - company should manually input required/preferred skills
+        # This ensures accurate skill requirements rather than AI-guessed skills
         
-        # Extract skills if not provided
+        # Ensure skills are empty arrays if not provided
         if not data.get('required_skills'):
-            skills = InternshipParser.extract_skills_from_description(description)
-            data['required_skills'] = skills
+            data['required_skills'] = []
+        if not data.get('preferred_skills'):
+            data['preferred_skills'] = []
         
         return data

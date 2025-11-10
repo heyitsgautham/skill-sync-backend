@@ -45,7 +45,7 @@ def run_migration():
         return True
         
     except Exception as e:
-        print(f"\n❌ Migration failed: {str(e)}")
+        print(f"\n  Migration failed: {str(e)}")
         return False
 
 
@@ -87,7 +87,7 @@ def compute_initial_matches():
         return True
         
     except Exception as e:
-        print(f"\n❌ Batch computation failed: {str(e)}")
+        print(f"\n  Batch computation failed: {str(e)}")
         import traceback
         traceback.print_exc()
         return False
@@ -123,7 +123,7 @@ def verify_system():
         return True
         
     except Exception as e:
-        print(f"\n❌ Verification failed: {str(e)}")
+        print(f"\n  Verification failed: {str(e)}")
         return False
 
 
@@ -179,12 +179,12 @@ def main():
     
     # Step 1: Migration
     if not run_migration():
-        print("\n❌ Setup failed at migration step. Please fix errors and try again.")
+        print("\n  Setup failed at migration step. Please fix errors and try again.")
         sys.exit(1)
     
     # Step 2: Compute matches
     if not compute_initial_matches():
-        print("\n❌ Setup failed at batch computation step. Please fix errors and try again.")
+        print("\n  Setup failed at batch computation step. Please fix errors and try again.")
         sys.exit(1)
     
     # Step 3: Verify

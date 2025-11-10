@@ -68,7 +68,7 @@ def reindex_all_internships():
                     print(f"⚠️  Skipped: {internship.title} (ID: {internship.id}) - No description or skills")
                     
             except Exception as e:
-                print(f"❌ Error indexing {internship.title}: {str(e)}")
+                print(f"  Error indexing {internship.title}: {str(e)}")
                 error_count += 1
         
         print()
@@ -76,7 +76,7 @@ def reindex_all_internships():
         print("RE-INDEXING COMPLETE")
         print("=" * 80)
         print(f"✅ Successfully indexed: {indexed_count} internships")
-        print(f"❌ Errors: {error_count} internships")
+        print(f"  Errors: {error_count} internships")
         print()
         
         # Verify final count
@@ -92,7 +92,7 @@ def reindex_all_internships():
                 print(f"   {i}. {meta.get('title')} (ID: {meta.get('internship_id')})")
         
     except Exception as e:
-        print(f"\n❌ Error: {str(e)}")
+        print(f"\n  Error: {str(e)}")
         import traceback
         print(traceback.format_exc())
         raise

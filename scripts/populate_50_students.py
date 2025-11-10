@@ -478,7 +478,7 @@ def populate_students():
         
     except Exception as e:
         db.rollback()
-        print(f"\n❌ Error: {str(e)}")
+        print(f"\n  Error: {str(e)}")
         raise
     finally:
         db.close()

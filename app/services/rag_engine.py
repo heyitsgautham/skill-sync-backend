@@ -4,15 +4,19 @@ Handles embeddings, vector storage, and similarity matching
 """
 
 import os
+import logging
 from typing import List, Dict, Optional, Tuple
 import chromadb
 from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
 import numpy as np
 from dotenv import load_dotenv
-import google.generativeai as genai
+
+from app.utils.gemini_key_manager import get_gemini_key_manager
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 class RAGEngine:
@@ -22,6 +26,7 @@ class RAGEngine:
         """Initialize RAG engine with HuggingFace embeddings and ChromaDB"""
         # Initialize HuggingFace embedding model
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+        logger.info("✅ Initialized HuggingFace embedding model: all-MiniLM-L6-v2")
         
         # Initialize ChromaDB client
         db_path = os.getenv("CHROMA_DB_PATH", "./data/chroma_db")
@@ -43,13 +48,9 @@ class RAGEngine:
             metadata={"description": "Internship posting embeddings"}
         )
         
-        # Initialize Google Generative AI
-        google_api_key = os.getenv("GOOGLE_API_KEY")
-        if google_api_key:
-            genai.configure(api_key=google_api_key)
-            self.llm_model = genai.GenerativeModel('gemini-pro')
-        else:
-            self.llm_model = None
+        # Initialize Gemini key manager
+        self.key_manager = get_gemini_key_manager()
+        logger.info("✅ RAGEngine initialized with GeminiKeyManager")
     
     def generate_embedding(self, text: str) -> List[float]:
         """
@@ -405,6 +406,35 @@ class RAGEngine:
         except Exception as e:
             print(f"Error deleting internship embedding: {str(e)}")
             return False
+    
+    def clear_all_resume_embeddings(self) -> int:
+        """
+        Clear ALL resume embeddings from ChromaDB at once
+        
+        This is much more reliable than deleting one-by-one.
+        Returns the number of embeddings cleared.
+        """
+        try:
+            # Get all current IDs
+            result = self.resume_collection.get()
+            all_ids = result['ids']
+            count = len(all_ids)
+            
+            logger.info(f"Found {count} resume embeddings to clear from ChromaDB")
+            
+            # Delete all at once if any exist
+            if count > 0:
+                self.resume_collection.delete(ids=all_ids)
+                logger.info(f"✅ Successfully cleared {count} resume embeddings from ChromaDB")
+            else:
+                logger.info("No resume embeddings to clear")
+            
+            return count
+        except Exception as e:
+            logger.error(f"  Error clearing all resume embeddings: {str(e)}")
+            import traceback
+            logger.error(traceback.format_exc())
+            return 0
 
 
 # Global RAG engine instance

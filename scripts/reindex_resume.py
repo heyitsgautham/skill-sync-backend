@@ -19,7 +19,7 @@ def reindex_resume(resume_id: int):
         resume = db.query(Resume).filter(Resume.id == resume_id).first()
         
         if not resume:
-            print(f"❌ Resume {resume_id} not found")
+            print(f"  Resume {resume_id} not found")
             return
         
         print(f"\n📄 Reindexing Resume {resume_id}:")
@@ -29,7 +29,7 @@ def reindex_resume(resume_id: int):
         
         # Check if file exists
         if not os.path.exists(resume.file_path):
-            print(f"❌ Resume file not found at: {resume.file_path}")
+            print(f"  Resume file not found at: {resume.file_path}")
             return
         
         # Parse resume if not already parsed
@@ -41,7 +41,7 @@ def reindex_resume(resume_id: int):
                 resume.extracted_skills = parsed_data['extracted_skills']
                 print(f"   ✅ Parsed! Extracted {len(parsed_data['extracted_skills'])} skills")
             except Exception as e:
-                print(f"   ❌ Parsing failed: {str(e)}")
+                print(f"     Parsing failed: {str(e)}")
                 return
         else:
             print(f"   ✅ Already parsed ({len(resume.extracted_skills)} skills)")
@@ -62,7 +62,7 @@ def reindex_resume(resume_id: int):
                 resume.embedding_id = embedding_id
                 print(f"   ✅ Embedding created: {embedding_id}")
             except Exception as e:
-                print(f"   ❌ Embedding creation failed: {str(e)}")
+                print(f"     Embedding creation failed: {str(e)}")
                 return
         else:
             print(f"   ✅ Embedding already exists: {resume.embedding_id}")
@@ -72,7 +72,7 @@ def reindex_resume(resume_id: int):
         print(f"\n✅ Resume {resume_id} successfully reindexed!\n")
         
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"  Error: {str(e)}")
         db.rollback()
     finally:
         db.close()

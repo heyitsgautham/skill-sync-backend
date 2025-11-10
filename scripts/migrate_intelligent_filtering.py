@@ -83,7 +83,7 @@ def migrate_database():
             
         except Exception as e:
             trans.rollback()
-            print(f"❌ Migration failed: {str(e)}")
+            print(f"  Migration failed: {str(e)}")
             raise
 
 
@@ -112,7 +112,7 @@ def recreate_tables():
     response = input("Are you sure you want to continue? (yes/no): ")
     
     if response.lower() != 'yes':
-        print("❌ Operation cancelled")
+        print("  Operation cancelled")
         return
     
     print("🔄 Dropping all tables...")
@@ -147,9 +147,9 @@ if __name__ == "__main__":
         elif args.mode == "indexes":
             create_indexes()
         else:
-            print(f"❌ Unknown mode: {args.mode}")
+            print(f"  Unknown mode: {args.mode}")
             sys.exit(1)
             
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"  Error: {str(e)}")
         sys.exit(1)

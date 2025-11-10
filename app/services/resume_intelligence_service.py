@@ -6,12 +6,16 @@ Uses Google Gemini for structured extraction and HuggingFace embeddings for matc
 import os
 import json
 import re
+import logging
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
-import google.generativeai as genai
 from dotenv import load_dotenv
 
+from app.utils.gemini_key_manager import get_gemini_key_manager
+
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 class ResumeIntelligenceService:
@@ -21,16 +25,9 @@ class ResumeIntelligenceService:
     """
     
     def __init__(self):
-        """Initialize Gemini AI for structured extraction"""
-        google_api_key = os.getenv("GOOGLE_API_KEY")
-        if not google_api_key:
-            # Allow initialization without API key for testing environments
-            # The API key will be checked when methods are actually called
-            self.model = None
-            return
-        
-        genai.configure(api_key=google_api_key)
-        self.model = genai.GenerativeModel('gemini-2.5-flash')
+        """Initialize Gemini AI key manager for structured extraction"""
+        self.key_manager = get_gemini_key_manager()
+        logger.info("✅ ResumeIntelligenceService initialized with GeminiKeyManager")
         
     def extract_structured_data(self, resume_text: str) -> Dict:
         """
@@ -118,12 +115,18 @@ Resume Text:
 Return ONLY the JSON object, no markdown, no explanation.
 """
         
-        if self.model is None:
-            raise ValueError("GOOGLE_API_KEY not configured. Cannot extract structured data.")
-        
         try:
-            response = self.model.generate_content(prompt)
-            result_text = response.text.strip()
+            logger.info("📤 Extracting structured data from resume using Gemini...")
+            
+            # Use key manager with retry logic
+            result_text = self.key_manager.generate_content(
+                prompt=prompt,
+                model="gemini-2.5-flash",
+                purpose="resume_parsing",
+                temperature=0.1,
+                max_output_tokens=8000,
+                max_retries=3
+            )
             
             # Clean up markdown code blocks if present
             result_text = re.sub(r'^```json\s*', '', result_text)
@@ -142,15 +145,16 @@ Return ONLY the JSON object, no markdown, no explanation.
                         structured_data.get('skills', {}).get('soft', [])
             structured_data['all_skills'] = list(set(all_skills))  # Remove duplicates
             
+            logger.info(f"✅ Extracted {len(all_skills)} skills, {len(structured_data.get('experience', []))} experiences")
             return structured_data
             
         except json.JSONDecodeError as e:
-            print(f"JSON parsing error: {e}")
-            print(f"Response text: {result_text}")
+            logger.error(f"  JSON parsing error: {e}")
+            logger.error(f"Response text: {result_text}")
             # Return minimal valid structure
             return self._create_fallback_structure(resume_text)
         except Exception as e:
-            print(f"Error in structured extraction: {e}")
+            logger.error(f"  Error in structured extraction: {e}")
             return self._create_fallback_structure(resume_text)
     
     def _calculate_total_experience(self, experiences: List[Dict]) -> int:
@@ -279,10 +283,19 @@ Write in third person. Be specific and highlight key strengths.
 """
         
         try:
-            response = self.model.generate_content(prompt)
-            return response.text.strip()
+            logger.info("📤 Generating candidate summary...")
+            result = self.key_manager.generate_content(
+                prompt=prompt,
+                model="gemini-2.5-flash",
+                purpose="candidate_summary",
+                temperature=0.3,
+                max_output_tokens=200,
+                max_retries=3
+            )
+            logger.info("✅ Candidate summary generated")
+            return result
         except Exception as e:
-            print(f"Error generating summary: {e}")
+            logger.error(f"  Error generating summary: {e}")
             return f"Candidate with {structured_data.get('total_experience_years', 0)} years of experience"
     
     def extract_key_achievements(self, structured_data: Dict) -> List[str]:
@@ -316,14 +329,23 @@ Format: ["achievement 1", "achievement 2", ...]
 """
         
         try:
-            response = self.model.generate_content(prompt)
-            result_text = response.text.strip()
+            logger.info("📤 Extracting key achievements...")
+            result_text = self.key_manager.generate_content(
+                prompt=prompt,
+                model="gemini-2.5-flash",
+                purpose="achievement_extraction",
+                temperature=0.2,
+                max_output_tokens=500,
+                max_retries=3
+            )
+            
             result_text = re.sub(r'^```json\s*', '', result_text)
             result_text = re.sub(r'^```\s*', '', result_text)
             result_text = re.sub(r'\s*```$', '', result_text)
             
             top_achievements = json.loads(result_text)
+            logger.info(f"✅ Extracted {len(top_achievements)} key achievements")
             return top_achievements[:5]
         except Exception as e:
-            print(f"Error extracting achievements: {e}")
+            logger.error(f"  Error extracting achievements: {e}")
             return all_achievements[:5]

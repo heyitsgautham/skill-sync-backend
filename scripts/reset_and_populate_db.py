@@ -511,7 +511,7 @@ def main():
         print("="*70)
         
     except Exception as e:
-        print(f"\n❌ Error: {str(e)}")
+        print(f"\n  Error: {str(e)}")
         db.rollback()
         raise
     finally:

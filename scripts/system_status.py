@@ -39,7 +39,7 @@ def check_status():
                 all_passed = False
                 
     except Exception as e:
-        print(f"  ❌ Database error: {e}")
+        print(f"    Database error: {e}")
         all_passed = False
     
     # 2. Check Gemini API
@@ -52,7 +52,7 @@ def check_status():
         api_key = os.getenv('GOOGLE_API_KEY')
         
         if not api_key:
-            print("  ❌ GOOGLE_API_KEY not found in .env")
+            print("    GOOGLE_API_KEY not found in .env")
             all_passed = False
         else:
             genai.configure(api_key=api_key)
@@ -64,7 +64,7 @@ def check_status():
                 print("  ⚠️  Gemini responded but with empty content")
                 
     except Exception as e:
-        print(f"  ❌ Gemini API error: {e}")
+        print(f"    Gemini API error: {e}")
         all_passed = False
     
     # 3. Check HuggingFace Embeddings
@@ -81,7 +81,7 @@ def check_status():
             print(f"  ⚠️  Unexpected embedding dimension: {len(test_embedding)}")
             
     except Exception as e:
-        print(f"  ❌ Embedding error: {e}")
+        print(f"    Embedding error: {e}")
         all_passed = False
     
     # 4. Check ChromaDB
@@ -102,7 +102,7 @@ def check_status():
         print(f"  ✅ ChromaDB initialized ({len(collections)} collections)")
         
     except Exception as e:
-        print(f"  ❌ ChromaDB error: {e}")
+        print(f"    ChromaDB error: {e}")
         all_passed = False
     
     # 5. Check Services
@@ -111,21 +111,21 @@ def check_status():
         from app.services.resume_intelligence_service import ResumeIntelligenceService
         print("  ✅ ResumeIntelligenceService")
     except Exception as e:
-        print(f"  ❌ ResumeIntelligenceService: {e}")
+        print(f"    ResumeIntelligenceService: {e}")
         all_passed = False
         
     try:
         from app.services.matching_engine import MatchingEngine
         print("  ✅ MatchingEngine")
     except Exception as e:
-        print(f"  ❌ MatchingEngine: {e}")
+        print(f"    MatchingEngine: {e}")
         all_passed = False
         
     try:
         from app.services.rag_engine import RAGEngine
         print("  ✅ RAGEngine")
     except Exception as e:
-        print(f"  ❌ RAGEngine: {e}")
+        print(f"    RAGEngine: {e}")
         all_passed = False
     
     # 6. Check API Routes
@@ -142,7 +142,7 @@ def check_status():
             print(f"     • {methods:10} {route.path}")
             
     except Exception as e:
-        print(f"  ❌ Routes error: {e}")
+        print(f"    Routes error: {e}")
         all_passed = False
     
     # Final Status
