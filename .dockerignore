@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Local development
+.env
+.env.local
+*.local
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+test_exports/
+tests/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Documentation
+README.md
+*.md
+
+# Data directories (will be persistent storage in production)
+data/chroma_db/*
+app/public/resumes/*
+
+# Scripts
+scripts/
+
+# Frontend
+frontend-integration/

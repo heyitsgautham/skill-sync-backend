@@ -28,9 +28,11 @@ except Exception as e:
     print("  Please ensure PostgreSQL is running and DATABASE_URL is configured correctly")
 
 # Configure CORS
+# In production, set ALLOWED_ORIGINS environment variable to your frontend URL
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure this properly in production
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
